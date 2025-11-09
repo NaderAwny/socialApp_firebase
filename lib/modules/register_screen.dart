@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopapp/auth_cubit/authcubit.dart';
-import 'package:shopapp/auth_cubit/authstates.dart';
-import 'package:shopapp/layout/cubit_layout/social_screen.dart';
-import 'package:shopapp/modules/login.dart';
+import '../auth_cubit/authcubit.dart';
+import '../auth_cubit/authstates.dart';
+
+import 'login.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
@@ -31,18 +33,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
-leading: IconButton(onPressed: (){
-  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>socialloginscreen()));
-
-
-  
-}, icon: Icon(Icons.arrow_back)),
-
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => SocialLoginScreen()));
+            },
+            icon: Icon(Icons.arrow_back)),
       ),
-      body: BlocConsumer<authcubit, authstates>(
+      body: BlocConsumer<AuthCubit, AuthStates>(
         listener: (context, state) {
-          if (state is socialcreateuserssuccfulstate) {
+          if (state is SocialCreateUsersSuccessfulState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text("Register Successful ✅"),
@@ -51,10 +51,10 @@ leading: IconButton(onPressed: (){
             );
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (_) =>socialloginscreen()),
+              MaterialPageRoute(builder: (_) => SocialLoginScreen()),
             );
           }
-          if (state is autherrorregister) {
+          if (state is AuthErrorRegister) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('Register failed'),
@@ -83,7 +83,6 @@ leading: IconButton(onPressed: (){
                     SizedBox(height: 15),
                     Text(
                       " Register now communicate with frindes",
-
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
@@ -117,16 +116,11 @@ leading: IconButton(onPressed: (){
                     ),
                     SizedBox(height: 10),
                     TextFormField(
-                      
                       controller: _passwordController,
-                      
                       decoration: InputDecoration(
-                        
                         labelText: "Password",
                         border: OutlineInputBorder(
-                          
                           borderRadius: BorderRadius.circular(15),
-                          
                         ),
                         prefixIcon: Icon(Icons.lock),
                         suffixIcon: IconButton(
@@ -142,7 +136,7 @@ leading: IconButton(onPressed: (){
                           ),
                         ),
                       ),
-                      obscureText:obsure,
+                      obscureText: obsure,
                       validator: (value) => value!.length < 6
                           ? "Password must be 6+ chars"
                           : null,
@@ -174,7 +168,6 @@ leading: IconButton(onPressed: (){
                           ? "Passwords do not match"
                           : null,
                     ),
-
                     SizedBox(height: 10),
                     TextFormField(
                       controller: _phone,
@@ -188,9 +181,8 @@ leading: IconButton(onPressed: (){
                       validator: (value) =>
                           value!.isEmpty ? "Enter your phone" : null,
                     ),
-
                     SizedBox(height: 30),
-                    state is authloading
+                    state is AuthLoading
                         ? CircularProgressIndicator()
                         : SizedBox(
                             width: double.infinity,
@@ -203,17 +195,15 @@ leading: IconButton(onPressed: (){
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   /// استدعاء cubit login
-                                  authcubit
-                                      .get(context)
-                                      .registerUser(
-                                        _nameController.text.trim(),
-                                        _emailController.text.trim(),
-                                        _passwordController.text.trim(),
-                                        _phone.text.trim(),
-                                      );
+                                  AuthCubit.get(context).registerUser(
+                                    _nameController.text.trim(),
+                                    _emailController.text.trim(),
+                                    _passwordController.text.trim(),
+                                    _phone.text.trim(),
+                                  );
                                 }
                               },
-                              child: state is authloading
+                              child: state is AuthLoading
                                   ? CircularProgressIndicator(
                                       color: Colors.white,
                                     )

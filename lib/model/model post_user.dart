@@ -1,4 +1,6 @@
-class postuser {
+// ignore_for_file: file_names
+
+class PostUser {
   String name;
   String uId;
   String? image;
@@ -7,10 +9,10 @@ class postuser {
   String? postimage;
 
   // جديد:
-  int? comments;       // عدد الكومنتات
+  int? comments; // عدد الكومنتات
   String? lastComment; // نص آخر تعليق
 
-  postuser({
+  PostUser({
     required this.name,
     required this.uId,
     this.image,
@@ -21,8 +23,8 @@ class postuser {
     this.lastComment,
   });
 
-  factory postuser.fromJson(Map<String, dynamic> map) {
-    return postuser(
+  factory PostUser.fromJson(Map<String, dynamic> map) {
+    return PostUser(
       name: map['name']?.toString() ?? '',
       uId: map['uId']?.toString() ?? '',
       image: map['image']?.toString() ?? '',
@@ -44,6 +46,6 @@ class postuser {
       'postimage': postimage,
       'comments': comments ?? 0,
       'lastComment': lastComment ?? '',
-};
-}
+    };
+  }
 }

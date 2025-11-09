@@ -1,24 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopapp/layout/cubit_layout/social_cubite.dart';
-import 'package:shopapp/layout/cubit_layout/socialstates.dart';
+import '../layout/cubit_layout/social_cubite.dart';
+import '../layout/cubit_layout/socialstates.dart';
 
-class newpost extends StatefulWidget {
+class NewPost extends StatefulWidget {
+  const NewPost({super.key});
+
   @override
-  State<newpost> createState() => _newpostState();
+  State<NewPost> createState() => _NewPostState();
 }
 
-class _newpostState extends State<newpost> {
+class _NewPostState extends State<NewPost> {
   final TextEditingController _textController = TextEditingController();
   bool showCover = false; // الحالة اللي بتحدد هل نعرض cover ولا لأ
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<socialcubite, sociallayout>(
+    return BlocConsumer<SocialCubite, SocialLayout>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = socialcubite.get(context);
+        var cubit = SocialCubite.get(context);
         var usermodel = cubit.uermodel;
 
         return Scaffold(
@@ -42,7 +43,7 @@ class _newpostState extends State<newpost> {
                     cubit.createpost(
                       dateTime: now.toString(),
                       text: _textController.text,
-                      cover: showCover?usermodel!.cover : "",
+                      cover: showCover ? usermodel!.cover : "",
                     );
                   },
                   child: const Text(
@@ -67,7 +68,7 @@ class _newpostState extends State<newpost> {
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      "${usermodel.name}",
+                      usermodel.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         height: 1.5,
@@ -101,7 +102,7 @@ class _newpostState extends State<newpost> {
                             topRight: Radius.circular(12),
                           ),
                           image: DecorationImage(
-                            image: NetworkImage('${usermodel.cover}'),
+                            image: NetworkImage(usermodel.cover),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -166,7 +167,7 @@ class _newpostState extends State<newpost> {
             ),
           ),
         );
-     },
-);
-}
+      },
+    );
+  }
 }

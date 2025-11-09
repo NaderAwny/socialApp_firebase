@@ -96,6 +96,8 @@ class Model {
 }
 
 class OnBording extends StatefulWidget {
+  const OnBording({super.key});
+
   @override
   State<OnBording> createState() => _OnBordingState();
 }
@@ -137,13 +139,12 @@ class _OnBordingState extends State<OnBording>
       duration: Duration(milliseconds: 1200),
     );
 
-    imageAnimation =
-        Tween<Offset>(
-          begin: Offset(0, 1), // من تحت
-          end: Offset(0, 0), // مكانها الطبيعي
-        ).animate(
-          CurvedAnimation(parent: animationController, curve: Curves.easeOut),
-        );
+    imageAnimation = Tween<Offset>(
+      begin: Offset(0, 1), // من تحت
+      end: Offset(0, 0), // مكانها الطبيعي
+    ).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.easeOut),
+    );
 
     fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
@@ -152,16 +153,15 @@ class _OnBordingState extends State<OnBording>
       ),
     );
 
-    textAnimation =
-        Tween<Offset>(
-          begin: Offset(0, 0.5), // النصوص جاية من تحت شوية
-          end: Offset(0, 0),
-        ).animate(
-          CurvedAnimation(
-            parent: animationController,
-            curve: Interval(0.5, 1.0, curve: Curves.easeOut),
-          ),
-        );
+    textAnimation = Tween<Offset>(
+      begin: Offset(0, 0.5), // النصوص جاية من تحت شوية
+      end: Offset(0, 0),
+    ).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: Interval(0.5, 1.0, curve: Curves.easeOut),
+      ),
+    );
 
     animationController.forward(); // يبدأ الأنيميشن أول ما يفتح
   }
@@ -183,7 +183,7 @@ class _OnBordingState extends State<OnBording>
             onPressed: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => socialloginscreen()),
+                MaterialPageRoute(builder: (context) => SocialLoginScreen()),
               );
             },
             child: Text(
@@ -211,11 +211,11 @@ class _OnBordingState extends State<OnBording>
                     setState(() {
                       islast = true;
                     });
-                    print(" last");
+                    // Last page
                   } else {
-                    print("not last");
+                    // Not last page
                     setState(() {
-                      islast == false;
+                      islast = false;
                     });
                   }
                 },
@@ -238,7 +238,6 @@ class _OnBordingState extends State<OnBording>
                     spacing: 5,
                     expansionFactor: 4, // space from indector
                   ),
-
                   controller: pageController,
                   count: bording.length,
                 ),
@@ -248,7 +247,8 @@ class _OnBordingState extends State<OnBording>
                     if (islast == true) {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => socialloginscreen()),
+                        MaterialPageRoute(
+                            builder: (context) => SocialLoginScreen()),
                       );
                     } else {
                       pageController.nextPage(
@@ -270,37 +270,37 @@ class _OnBordingState extends State<OnBording>
   }
 
   Widget buildBoardingItem(Model model) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      // ✨ الصورة متحركة
-      Expanded(
-        child: SlideTransition(
-          position: imageAnimation,
-          child: Center(child: Image.asset("${model.image}")),
-        ),
-      ),
-      //   SizedBox(height: 30),
-      // ✨ النصوص تظهر بتدريج
-      FadeTransition(
-        opacity: fadeAnimation,
-        child: SlideTransition(
-          position: textAnimation,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "${model.title}",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 15),
-              Text(
-                "${model.body}",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-              ),
-            ],
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // ✨ الصورة متحركة
+          Expanded(
+            child: SlideTransition(
+              position: imageAnimation,
+              child: Center(child: Image.asset("${model.image}")),
+            ),
           ),
-        ),
-      ),
-    ],
-  );
+          //   SizedBox(height: 30),
+          // ✨ النصوص تظهر بتدريج
+          FadeTransition(
+            opacity: fadeAnimation,
+            child: SlideTransition(
+              position: textAnimation,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${model.title}",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 15),
+                  Text(
+                    "${model.body}",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
 }

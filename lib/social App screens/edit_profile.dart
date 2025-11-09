@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:shopapp/layout/cubit_layout/social_cubite.dart';
-import 'package:shopapp/layout/cubit_layout/socialstates.dart';
+import '../layout/cubit_layout/social_cubite.dart';
+import '../layout/cubit_layout/socialstates.dart';
 
 class EditProfile extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
@@ -14,15 +11,17 @@ class EditProfile extends StatelessWidget {
 
   final TextEditingController _phoneController = TextEditingController();
 
+  EditProfile({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<socialcubite, sociallayout>(
+    return BlocConsumer<SocialCubite, SocialLayout>(
       listener: (context, state) {},
       builder: (context, state) {
-        var usermodel = socialcubite.get(context).uermodel;
-        var profileimage = socialcubite.get(context).profileimage;
+        var usermodel = SocialCubite.get(context).uermodel;
+        var profileimage = SocialCubite.get(context).profileimage;
 
-        var coverimage = socialcubite.get(context).coverimage;
+        var coverimage = SocialCubite.get(context).coverimage;
         _nameController.text = usermodel!.name;
         _bioController.text = usermodel.bio!;
         _phoneController.text = usermodel.phone;
@@ -42,9 +41,7 @@ class EditProfile extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: TextButton(
                   onPressed: () {
-                    socialcubite
-                        .get(context)
-                        .updateprofile(
+                    SocialCubite.get(context).updateprofile(
                           name: _nameController.text,
                           phone: _phoneController.text,
                           bio: _bioController.text,
@@ -82,7 +79,7 @@ class EditProfile extends StatelessWidget {
                                 ),
                                 image: DecorationImage(
                                   image: coverimage == null
-                                      ? NetworkImage('${usermodel.cover}')
+                                      ? NetworkImage(usermodel.cover)
                                       : FileImage(coverimage),
                                   fit: BoxFit.cover,
                                 ),
@@ -90,8 +87,8 @@ class EditProfile extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {
-                                socialcubite.get(context).cover_image();
-                                print("cover camera clicked");
+                                SocialCubite.get(context).coverImage();
+                                // Cover camera clicked
                               },
                               icon: const Icon(
                                 CupertinoIcons.camera_circle_fill,
@@ -118,12 +115,11 @@ class EditProfile extends StatelessWidget {
                                     width: 4,
                                   ),
                                 ),
-
                                 child: GestureDetector(
                                   onTap: () {
-                                    socialcubite.get(context).profile_image();
+                                    SocialCubite.get(context).profileImage();
 
-                                    print("man");
+                                    // Profile image clicked
                                   },
                                   child: CircleAvatar(
                                     radius: 55,
@@ -155,7 +151,6 @@ class EditProfile extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 60),
-
                   TextFormField(
                     controller: _nameController,
                     decoration: InputDecoration(
@@ -168,9 +163,7 @@ class EditProfile extends StatelessWidget {
                     validator: (value) =>
                         value!.isEmpty ? "Enter your name" : null,
                   ),
-
                   SizedBox(height: 10),
-
                   TextFormField(
                     controller: _bioController,
                     decoration: InputDecoration(

@@ -1,15 +1,13 @@
-import 'dart:convert';
-
-class messageUserModel {
+class MessageUserModel {
   String? datetime;
   String? text;
   String? receiverid;
   String? senderid;
 
-  messageUserModel({this.datetime, this.text, this.receiverid, this.senderid});
+  MessageUserModel({this.datetime, this.text, this.receiverid, this.senderid});
 
-  factory messageUserModel.fromJson(Map<String, dynamic> map) {
-    return messageUserModel(
+  factory MessageUserModel.fromJson(Map<String, dynamic> map) {
+    return MessageUserModel(
       datetime: map['datetime']?.toString() ?? '',
       text: map['text']?.toString() ?? '',
       receiverid: map['receiverid']?.toString() ?? '',

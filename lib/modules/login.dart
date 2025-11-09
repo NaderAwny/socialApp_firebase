@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopapp/auth_cubit/authcubit.dart';
-import 'package:shopapp/auth_cubit/authstates.dart';
-import 'package:shopapp/layout/cubit_layout/social_cubite.dart';
-import 'package:shopapp/modules/register_screen.dart';
-import 'package:shopapp/modules/shared%20prefersnce.dart';
-import 'package:shopapp/layout/cubit_layout/social_screen.dart';
+import '../auth_cubit/authcubit.dart';
+import '../auth_cubit/authstates.dart';
+import '../layout/cubit_layout/social_cubite.dart';
+import 'register_screen.dart';
 
-class socialloginscreen extends StatefulWidget {
+import '../layout/cubit_layout/social_screen.dart';
+
+class SocialLoginScreen extends StatefulWidget {
+  const SocialLoginScreen({super.key});
+
   @override
-  State<socialloginscreen> createState() => _ShoopLoginState();
+  State<SocialLoginScreen> createState() => _ShoopLoginState();
 }
 
-class _ShoopLoginState extends State<socialloginscreen> {
+class _ShoopLoginState extends State<SocialLoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -22,11 +24,11 @@ class _ShoopLoginState extends State<socialloginscreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => authcubit(),
-      child: BlocConsumer<authcubit, authstates>(
+      create: (context) => AuthCubit(),
+      child: BlocConsumer<AuthCubit, AuthStates>(
         listener: (context, state) async {
-          if (state is authsucessffullogin) {
-            socialcubite.get(context).getuserdata();
+          if (state is AuthSuccessFullLogin) {
+            SocialCubite.get(context).getuserdata();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('Login successful'),
@@ -36,7 +38,7 @@ class _ShoopLoginState extends State<socialloginscreen> {
             );
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => socialscreen()),
+              MaterialPageRoute(builder: (context) => SocialScreen()),
             );
             // حفظ حالة تسجيل الدخول
 
@@ -44,7 +46,7 @@ class _ShoopLoginState extends State<socialloginscreen> {
             // Navigator.pushReplacement(...);
           }
 
-          if (state is autherror) {
+          if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('Login failed'),
@@ -150,15 +152,13 @@ class _ShoopLoginState extends State<socialloginscreen> {
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               /// استدعاء cubit login
-                              authcubit
-                                  .get(context)
-                                  .loginUser(
+                              AuthCubit.get(context).loginUser(
                                     _emailController.text.trim(),
                                     _passwordController.text.trim(),
                                   );
                             }
                           },
-                          child: state is authloading
+                          child: state is AuthLoading
                               ? CircularProgressIndicator(color: Colors.white)
                               : Text(
                                   "Login",

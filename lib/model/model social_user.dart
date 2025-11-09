@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 
 class SocialUserModel {
@@ -6,19 +8,18 @@ class SocialUserModel {
   String phone;
   String uId;
   String? image;
-  String ?bio;
+  String? bio;
   bool isEmailverifiled;
- late String cover;
+  late String cover;
   SocialUserModel({
     required this.name,
     required this.email,
     required this.phone,
     required this.uId,
-     required this.isEmailverifiled,
-      this.image,
-      this.bio,
-      required this.cover,
-
+    required this.isEmailverifiled,
+    this.image,
+    this.bio,
+    required this.cover,
   });
 
   factory SocialUserModel.fromJson(Map<String, dynamic> map) {
@@ -27,15 +28,24 @@ class SocialUserModel {
       email: map['email']?.toString() ?? '',
       phone: map['phone']?.toString() ?? '',
       uId: map['uId']?.toString() ?? '',
-      image: map['image']?.toString() ,
-      isEmailverifiled: map['isEmailverifiled']??false,
-      bio:map['bio']??'',
-      cover: map['cover']??'',
+      image: map['image']?.toString(),
+      isEmailverifiled: map['isEmailverifiled'] ?? false,
+      bio: map['bio'] ?? '',
+      cover: map['cover'] ?? '',
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {'name': name, 'email': email, 'phone': phone, 'uId': uId,'isEmailverifiled':isEmailverifiled,'image':image,'bio':bio,'cover':cover};
+    return {
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'uId': uId,
+      'isEmailverifiled': isEmailverifiled,
+      'image': image,
+      'bio': bio,
+      'cover': cover
+    };
   }
 
   String toJson() => json.encode(toMap());

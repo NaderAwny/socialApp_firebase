@@ -1,10 +1,10 @@
-abstract class authstates {}
+abstract class AuthStates {}
 
-class authintialsate extends authstates {}
+class AuthInitialState extends AuthStates {}
 
-class authloading extends authstates {}
+class AuthLoading extends AuthStates {}
 
-class authsucessffullogin extends authstates {
+class AuthSuccessFullLogin extends AuthStates {
   final String? emailError;
   final String? passwordError;
   final String? nameError;
@@ -12,7 +12,7 @@ class authsucessffullogin extends authstates {
   final String? name;
   final String? phone;
 
-  authsucessffullogin({
+  AuthSuccessFullLogin({
     this.emailError,
     this.passwordError,
     this.nameError,
@@ -22,12 +22,12 @@ class authsucessffullogin extends authstates {
   });
 }
 
-class autherror extends authstates {
+class AuthError extends AuthStates {
   final String? message;
-  autherror(this.message);
+  AuthError(this.message);
 }
 
-class authsucessffulregsiter extends authstates {
+class AuthSuccessFullRegister extends AuthStates {
   final String? emailError;
   final String? passwordError;
   final String? nameError;
@@ -35,7 +35,7 @@ class authsucessffulregsiter extends authstates {
   final String? name;
   final String? phone;
 
-  authsucessffulregsiter({
+  AuthSuccessFullRegister({
     this.emailError,
     this.passwordError,
     this.nameError,
@@ -45,19 +45,19 @@ class authsucessffulregsiter extends authstates {
   });
 }
 
-class autherrorregister extends authstates {
+class AuthErrorRegister extends AuthStates {
   final String? message;
-  autherrorregister(this.message);
+  AuthErrorRegister(this.message);
 }
 
 
 
-class socialcreateuserssuccfulstate extends authstates {}
+class SocialCreateUsersSuccessfulState extends AuthStates {}
 
-class socialcreateuserserror extends authstates {
+class SocialCreateUsersError extends AuthStates {
   String message;
 
-  socialcreateuserserror(this.message);
+  SocialCreateUsersError(this.message);
 
 }
-class logoutstates extends authstates {}
+class LogoutStates extends AuthStates {}

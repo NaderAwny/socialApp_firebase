@@ -1,10 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopapp/layout/cubit_layout/social_cubite.dart';
-import 'package:shopapp/layout/cubit_layout/socialstates.dart';
-import 'package:shopapp/model/messagemodel.dart';
-import 'package:shopapp/model/model%20social_user.dart';
+import '../layout/cubit_layout/social_cubite.dart';
+import '../layout/cubit_layout/socialstates.dart';
+import '../model/messagemodel.dart';
+import '../model/model%20social_user.dart';
 
 // ignore: must_be_immutable
 class Chatdeatils extends StatelessWidget {
@@ -18,8 +17,8 @@ class Chatdeatils extends StatelessWidget {
     //عشان عاوز استدعى حاجه قبل مايبداblock consumer
     return Builder(
       builder: (context) {
-        socialcubite.get(context).getmessage(receiverid: userModel.uId);
-        return BlocConsumer<socialcubite, sociallayout>(
+        SocialCubite.get(context).getmessage(receiverid: userModel.uId);
+        return BlocConsumer<SocialCubite, SocialLayout>(
           listener: (context, state) {},
           builder: (context, state) {
             return Scaffold(
@@ -41,17 +40,14 @@ class Chatdeatils extends StatelessWidget {
                               width: 50,
                               decoration: BoxDecoration(
                                 color: Colors.grey,
-
                                 borderRadius: BorderRadius.circular(25),
-                                border: BoxBorder.all(
+                                border: Border.all(
                                   color: Colors.blue,
                                   width: 2,
                                 ),
                               ),
-
                               child: Icon(Icons.person, size: 30),
                             ),
-
                       SizedBox(width: 20),
                       Expanded(
                         child: Column(
@@ -60,7 +56,7 @@ class Chatdeatils extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  "${userModel.name}",
+                                  userModel.name,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     height: 1.5,
@@ -82,7 +78,7 @@ class Chatdeatils extends StatelessWidget {
                 ),
               ),
               //  بنلعب على طول list
-              body: socialcubite.get(context).message.length >= 0
+              body: SocialCubite.get(context).message.isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
@@ -90,29 +86,23 @@ class Chatdeatils extends StatelessWidget {
                           Expanded(
                             child: ListView.separated(
                               physics: BouncingScrollPhysics(),
-
                               itemBuilder: (context, index) {
                                 //دى الحظهالى باكد فيها الرساله دى بتاعتى عشان لو بتاعتى تبا على اليمين والعكس صحيح
-                                var messagelist = socialcubite
-                                    .get(context)
-                                    .message[index];
-                                if (socialcubite.get(context).uermodel!.uId ==
+                                var messagelist =
+                                    SocialCubite.get(context).message[index];
+                                if (SocialCubite.get(context).uermodel!.uId ==
                                     messagelist.senderid) {
                                   return mymessage(messagelist);
                                 }
 
                                 return message(messagelist);
                               },
-
-                              separatorBuilder: (context, Index) =>
+                              separatorBuilder: (context, index) =>
                                   SizedBox(height: 15),
-                              itemCount: socialcubite
-                                  .get(context)
-                                  .message
-                                  .length,
+                              itemCount:
+                                  SocialCubite.get(context).message.length,
                             ),
                           ),
-
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -133,7 +123,6 @@ class Chatdeatils extends StatelessWidget {
                                       controller: _messagecontroller,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
-
                                         hintText:
                                             "type yout with message here...",
                                       ),
@@ -146,15 +135,12 @@ class Chatdeatils extends StatelessWidget {
                                   color: Colors.blue,
                                   child: MaterialButton(
                                     onPressed: () {
-                                      socialcubite
-                                          .get(context)
-                                          .sendmessage(
+                                      SocialCubite.get(context).sendmessage(
                                             datetime: DateTime.now().toString(),
                                             text: _messagecontroller.text,
                                             receiverid: userModel.uId,
                                           );
                                     },
-
                                     child: Icon(
                                       Icons.send,
                                       size: 16,
@@ -176,35 +162,35 @@ class Chatdeatils extends StatelessWidget {
     );
   }
 
-  Widget mymessage(messageUserModel model) => Align(
-    alignment: AlignmentDirectional.centerStart,
-    child: Container(
-      padding: EdgeInsetsDirectional.symmetric(vertical: 5, horizontal: 10),
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-        borderRadius: BorderRadiusDirectional.only(
-          bottomEnd: Radius.circular(10),
-          topEnd: Radius.circular(10),
-          topStart: Radius.circular(10),
+  Widget mymessage(MessageUserModel model) => Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: Container(
+          padding: EdgeInsetsDirectional.symmetric(vertical: 5, horizontal: 10),
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadiusDirectional.only(
+              bottomEnd: Radius.circular(10),
+              topEnd: Radius.circular(10),
+              topStart: Radius.circular(10),
+            ),
+          ),
+          child: Text("${model.text}"),
         ),
-      ),
-      child: Text("${model.text}"),
-    ),
-  );
+      );
 
-  Widget message(messageUserModel model) => Align(
-    alignment: AlignmentDirectional.centerEnd,
-    child: Container(
-      padding: EdgeInsetsDirectional.symmetric(vertical: 5, horizontal: 10),
-      decoration: BoxDecoration(
-        color: Colors.blue.withOpacity(0.2),
-        borderRadius: BorderRadiusDirectional.only(
-          bottomStart: Radius.circular(10),
-          topEnd: Radius.circular(10),
-          topStart: Radius.circular(10),
+  Widget message(MessageUserModel model) => Align(
+        alignment: AlignmentDirectional.centerEnd,
+        child: Container(
+          padding: EdgeInsetsDirectional.symmetric(vertical: 5, horizontal: 10),
+          decoration: BoxDecoration(
+            color: Colors.blue.withValues(alpha: 0.2),
+            borderRadius: BorderRadiusDirectional.only(
+              bottomStart: Radius.circular(10),
+              topEnd: Radius.circular(10),
+              topStart: Radius.circular(10),
+            ),
+          ),
+          child: Text("${model.text}"),
         ),
-      ),
-      child: Text("${model.text}"),
-    ),
-  );
+      );
 }

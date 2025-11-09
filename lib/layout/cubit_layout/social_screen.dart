@@ -1,34 +1,33 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shopapp/layout/cubit_layout/social_cubite.dart';
-import 'package:shopapp/layout/cubit_layout/socialstates.dart';
-import 'package:shopapp/modules/login.dart';
-import 'package:shopapp/modules/shared%20prefersnce.dart';
-import 'package:shopapp/social%20App%20screens/newpost.dart';
+import 'social_cubite.dart';
+import 'socialstates.dart';
 
-class socialscreen extends StatelessWidget {
+import '../../social%20App%20screens/newpost.dart';
+
+class SocialScreen extends StatelessWidget {
+  const SocialScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<socialcubite, sociallayout>(
+    return BlocConsumer<SocialCubite, SocialLayout>(
       listener: (context, state) {
-        if (state is NewpostbottomNavstates) {
+        if (state is NewPostBottomNavStates) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => newpost()),
+            MaterialPageRoute(builder: (context) => NewPost()),
           );
         }
       },
       builder: (context, state) {
-        var cubit = socialcubite.get(context);
+        var cubit = SocialCubite.get(context);
 
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.white,
             scrolledUnderElevation: 0,
-
             title: Text(
               cubit.titles[cubit.currentindex],
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -63,12 +62,10 @@ class socialscreen extends StatelessWidget {
                 icon: FaIcon(FontAwesomeIcons.commentDots),
                 label: 'Chats',
               ),
-
               BottomNavigationBarItem(
                 icon: FaIcon(FontAwesomeIcons.commentMedical),
                 label: 'post',
               ),
-
               BottomNavigationBarItem(
                 icon: FaIcon(FontAwesomeIcons.user),
                 label: 'User',
@@ -130,11 +127,11 @@ class socialscreen extends StatelessWidget {
 }
  /*  TextButton(
                 onPressed: () async {
-                  await sharedprof.removeData(key: 'uid');
+                  await SharedProf.removeData(key: 'uid');
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => socialloginscreen(),
+                      builder: (context) => SocialLoginScreen(),
                     ),
                   );
                 },

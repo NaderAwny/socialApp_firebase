@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopapp/layout/cubit_layout/social_cubite.dart';
-import 'package:shopapp/layout/cubit_layout/socialstates.dart';
-import 'package:shopapp/model/model%20post_user.dart';
+import '../layout/cubit_layout/social_cubite.dart';
+import '../layout/cubit_layout/socialstates.dart';
+import '../model/model%20post_user.dart';
 
 class CreateCommentScreen extends StatefulWidget {
   final String postId;
   final int index;
 
   const CreateCommentScreen({
-    Key? key,
+    super.key,
     required this.postId,
-    required this.index, required postuser postuser,
-  }) : super(key: key);
+    required this.index,
+    required PostUser postUser,
+  });
 
   @override
   State<CreateCommentScreen> createState() => _CreateCommentScreenState();
@@ -25,15 +26,15 @@ class _CreateCommentScreenState extends State<CreateCommentScreen> {
   void initState() {
     super.initState();
     // بننادي الدالة عشان نجيب الكومنتات أول ما الصفحة تفتح
-    socialcubite.get(context).getComments(widget.postId);
+    SocialCubite.get(context).getComments(widget.postId);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<socialcubite, sociallayout>(
+    return BlocConsumer<SocialCubite, SocialLayout>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = socialcubite.get(context);
+        var cubit = SocialCubite.get(context);
 
         return Scaffold(
           appBar: AppBar(
@@ -138,7 +139,7 @@ class _CreateCommentScreenState extends State<CreateCommentScreen> {
             ],
           ),
         );
-     },
-);
-}
+      },
+    );
+  }
 }

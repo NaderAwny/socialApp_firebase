@@ -1,74 +1,74 @@
-abstract class sociallayout {}
+abstract class SocialLayout {}
 
-class socialintialstate extends sociallayout {}
+class SocialInitialState extends SocialLayout {}
 
-class socialloadin extends sociallayout {}
+class SocialLoading extends SocialLayout {}
 
-class socialsufful extends sociallayout {}
+class SocialSuccessful extends SocialLayout {}
 
-class changebottomNavstates extends sociallayout {}
+class ChangeBottomNavStates extends SocialLayout {}
 
-class socialError extends sociallayout {
+class SocialError extends SocialLayout {
   String message;
-  socialError({required this.message});
+  SocialError({required this.message});
 }
 
-class NewpostbottomNavstates extends sociallayout {}
+class NewPostBottomNavStates extends SocialLayout {}
 
-class socialprofileimagestatesSuccful extends sociallayout {}
+class SocialProfileImageStatesSuccessful extends SocialLayout {}
 
-class socialprofileimagestatesError extends sociallayout {}
+class SocialProfileImageStatesError extends SocialLayout {}
 
-class socialcoverimagestatesSuccful extends sociallayout {}
+class SocialCoverImageStatesSuccessful extends SocialLayout {}
 
-class socialcoverimagestatesError extends sociallayout {}
+class SocialCoverImageStatesError extends SocialLayout {}
 
-class socialupdatstatesError extends sociallayout {}
+class SocialUpdateStatesError extends SocialLayout {}
 
-class socialupdatstatesloading extends sociallayout {}
+class SocialUpdateStatesLoading extends SocialLayout {}
 
-class socialcreatepoststatesError extends sociallayout {}
+class SocialCreatePostStatesError extends SocialLayout {}
 
-class socialcreatepoststatesSuccful extends sociallayout {}
+class SocialCreatePostStatesSuccessful extends SocialLayout {}
 
-class getpostloading extends sociallayout {}
+class GetPostLoading extends SocialLayout {}
 
-class getpostsuccful extends sociallayout {}
+class GetPostSuccessful extends SocialLayout {}
 
-class getpostError extends sociallayout {
+class GetPostError extends SocialLayout {
   String message;
-  getpostError({required this.message});
+  GetPostError({required this.message});
 }
 
-class sociallikehostsuccfull extends sociallayout {}
+class SocialLikeHostSuccessful extends SocialLayout {}
 
-class sociallikehosterror extends sociallayout {
+class SocialLikeHostError extends SocialLayout {
   String message;
-  sociallikehosterror({required this.message});
+  SocialLikeHostError({required this.message});
 }
 
-class socialcommenthostsuccfull extends sociallayout {}
+class SocialCommentHostSuccessful extends SocialLayout {}
 
-class SocialCommentsLoaded extends sociallayout {}
+class SocialCommentsLoaded extends SocialLayout {}
 
-class SocialCommentserror extends sociallayout {
+class SocialCommentsError extends SocialLayout {
   String message;
-  SocialCommentserror({required this.message});
+  SocialCommentsError({required this.message});
 }
 
-class getalluerssuccful extends sociallayout {}
+class GetAllUsersSuccessful extends SocialLayout {}
 
-class getallusersError extends sociallayout {
+class GetAllUsersError extends SocialLayout {
   String message;
-  getallusersError({required this.message});
+  GetAllUsersError({required this.message});
 }
 
-class sendmessagestatessuccfull extends sociallayout {}
+class SendMessageStatesSuccessful extends SocialLayout {}
 
-class sendmessagestatesError extends sociallayout {
+class SendMessageStatesError extends SocialLayout {
   String message;
-  sendmessagestatesError({required this.message});
+  SendMessageStatesError({required this.message});
 }
 
-class getmessagestatessuccfull extends sociallayout {}
+class GetMessageStatesSuccessful extends SocialLayout {}
 
